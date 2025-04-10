@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "62612351424",
+    "project_id": "sentimate-c99b3cab",
+    "storage_bucket": "sentimate-c99b3cab.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:62612351424:android:8f2913ebaba068c6858025",
+        "android_client_info": {
+          "package_name": "com.example.sentimate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQ0t3K9hyMApOT9pHOAw4Q0H0kck2KydQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
