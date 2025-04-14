@@ -1,4 +1,4 @@
-`package com.example.sentimate;
+package com.example.sentimate;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,18 +6,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 
 public class MainActivity extends AppCompatActivity {
     EditText email, password;
     Button btnLogin;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         btnLogin = findViewById(R.id.btnLogin);
+        mAuth = FirebaseAuth.getInstance();
 
         btnLogin.setOnClickListener(v -> {
             String userEmail = email.getText().toString();
@@ -37,47 +35,25 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
 
-            // Check credentials against Firebase data
-            checkCredentials(userEmail, userPass);
+            loginUser(userEmail, userPass);
         });
     }
 
-    private void checkCredentials(String email, String password) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference usersRef = database.getReference("users");
-
-        usersRef.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                boolean found = false;
-                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                    String storedEmail = userSnapshot.child("email").getValue(String.class);
-                    String storedPassword = userSnapshot.child("password").getValue(String.class);
-
-                    if (storedEmail != null && storedPassword != null && storedEmail.equals(email) && storedPassword.equals(password)) {
-                        found = true;
-                        break;
+    private void loginUser(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        Toast.makeText(MainActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                        finish();
+                    } else {
+                        Toast.makeText(MainActivity.this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
-                }
-
-                if (found) {
-                    Toast.makeText(MainActivity.this, "Login Successful!", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(MainActivity.this, HomeActivity.class));
-                    finish();
-                } else {
-                    Toast.makeText(MainActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(MainActivity.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                });
     }
 
     public void goToSignup(View view) {
         startActivity(new Intent(this, SignupActivity.class));
     }
 }
-`
