@@ -3,6 +3,7 @@ package com.example.sentimate;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
@@ -21,6 +22,7 @@ public class JournalEntriesActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private JournalEntryAdapter adapter;
     private List<JournalEntry> entryList = new ArrayList<>();
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +33,13 @@ public class JournalEntriesActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new JournalEntryAdapter(entryList);
         recyclerView.setAdapter(adapter);
+        toolbar = findViewById(R.id.journalToolbar);
+
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         // 🟢 Set up FAB here
         FloatingActionButton fabAddEntry = findViewById(R.id.fabAddEntry);
@@ -76,5 +85,11 @@ public class JournalEntriesActivity extends AppCompatActivity {
         Date date = new Date(timestamp);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm a", Locale.getDefault());
         return dateFormat.format(date);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

@@ -6,7 +6,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    android:background="#FAFAFA">
+    android:background="#FAFAFA"
+    android:fitsSystemWindows="true">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/journalToolbar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:title="Your Journal Entries"
+        app:titleTextColor="@android:color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:elevation="4dp"
+        />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewEntries"
@@ -15,10 +32,11 @@
         android:layout_margin="8dp"
         android:clipToPadding="false"
         android:scrollbars="vertical"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/journalToolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAddEntry"

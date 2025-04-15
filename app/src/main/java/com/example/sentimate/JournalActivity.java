@@ -7,6 +7,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,6 +27,7 @@ public class JournalActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private List<JournalEntry> journalEntriesList;
     private JournalEntryAdapter adapter;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,32 +37,32 @@ public class JournalActivity extends AppCompatActivity {
         entryEditText = findViewById(R.id.entryEditText);
         saveButton = findViewById(R.id.saveButton);
         recyclerView = findViewById(R.id.recyclerView);
+        toolbar = findViewById(R.id.journalToolbar);
 
-        // Initialize the list and adapter
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+
         journalEntriesList = new ArrayList<>();
         adapter = new JournalEntryAdapter(journalEntriesList);
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
-        // Set up the save button click listener
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get the journal entry text
                 String entry = entryEditText.getText().toString().trim();
                 if (!entry.isEmpty()) {
-                    // Create a new journal entry with the current timestamp
                     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy hh:mm a", Locale.getDefault());
                     String formattedTimestamp = sdf.format(new Date());
                     JournalEntry journalEntryObj = new JournalEntry(entry, formattedTimestamp);
-                    // Add the entry to the list
+
                     journalEntriesList.add(0, journalEntryObj);
-                    // Notify the adapter that data has changed
                     adapter.notifyDataSetChanged();
-                    // Clear the EditText after saving the entry
                     entryEditText.setText("");
+
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     if (user != null) {
                         DatabaseReference entryRef = FirebaseDatabase.getInstance()
@@ -73,9 +75,15 @@ public class JournalActivity extends AppCompatActivity {
                         entryRef.child("text").setValue(entry);
                         entryRef.child("timestamp").setValue(timestamp);
                     }
-
                 }
             }
         });
+    }
+
+    // ✅ This method must be outside onCreate
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
