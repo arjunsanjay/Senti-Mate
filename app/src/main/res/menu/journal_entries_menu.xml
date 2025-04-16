@@ -4,22 +4,26 @@
     <item
         android:id="@+id/action_filter_date"
         android:title="Filter by Date"
+
         android:icon="@android:drawable/ic_menu_my_calendar"
         android:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_filter_week"
         android:title="Filter by Week"
+
         android:showAsAction="never" />
 
     <item
         android:id="@+id/action_filter_month"
         android:title="Filter by Month"
+
         android:showAsAction="never" />
 
     <item
         android:id="@+id/action_reset_filter"
         android:title="Reset Filter"
+
         android:showAsAction="never" />
 
 </menu>
