@@ -10,7 +10,7 @@
         android:id="@+id/titleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to Senti-Mate"
+        android:text="Main Menu"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/black"
