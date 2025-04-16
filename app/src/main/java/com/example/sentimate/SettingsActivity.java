@@ -1,5 +1,6 @@
 package com.example.sentimate;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -9,42 +10,44 @@ import androidx.appcompat.app.AppCompatDelegate;
 import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
-    Button btnEditProfile, btnChangeTheme, btnNotifications, btnManageData, btnPrivacy;
+    Button btnEditProfile, btnChangeTheme, btnNotifications, btnManageData, btnPrivacy, btnGoToLogin;
     SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        btnEditProfile = findViewById(R.id.btnEditProfile);
+        //btnEditProfile = findViewById(R.id.btnEditProfile);
         btnChangeTheme = findViewById(R.id.btnChangeTheme);
-        btnNotifications = findViewById(R.id.btnNotifications);
-        btnManageData = findViewById(R.id.btnManageData);
-        btnPrivacy = findViewById(R.id.btnPrivacy);
+        //btnNotifications = findViewById(R.id.btnNotifications);
+        //btnManageData = findViewById(R.id.btnManageData);
+       // btnPrivacy = findViewById(R.id.btnPrivacy);
+        btnGoToLogin = findViewById(R.id.btnGoToLogin);
 
         // Click Listeners
-        btnEditProfile.setOnClickListener(v -> {
-            Toast.makeText(SettingsActivity.this, "Edit Profile Clicked!", Toast.LENGTH_SHORT).show();
-            // startActivity(new Intent(SettingsActivity.this, EditProfileActivity.class)); // Uncomment when EditProfileActivity is implemented
-        });
+
 
         btnChangeTheme.setOnClickListener(v -> {
             Toast.makeText(SettingsActivity.this, "Change Theme Clicked!", Toast.LENGTH_SHORT).show();
             // Code to toggle between Light/Dark theme
         });
+        btnGoToLogin.setOnClickListener(v -> {
+            // Clear user session data
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear(); // This clears all shared preferences (e.g., user info, authentication data, etc.)
+            editor.apply();
 
-        btnNotifications.setOnClickListener(v -> {
-            Toast.makeText(SettingsActivity.this, "Notification Preferences Clicked!", Toast.LENGTH_SHORT).show();
+            // Optionally, show a Toast message to indicate successful logout
+            Toast.makeText(SettingsActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
+
+            // Start MainActivity (Login screen)
+            Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish(); // Close SettingsActivity so the user cannot go back
         });
 
-        btnManageData.setOnClickListener(v -> {
-            Toast.makeText(SettingsActivity.this, "Manage Data Clicked!", Toast.LENGTH_SHORT).show();
-            // startActivity(new Intent(SettingsActivity.this, BackupRestoreActivity.class)); // Uncomment when BackupRestoreActivity is implemented
-        });
 
-        btnPrivacy.setOnClickListener(v -> {
-            Toast.makeText(SettingsActivity.this, "Privacy Settings Clicked!", Toast.LENGTH_SHORT).show();
-        });
+
 
         sharedPreferences = getSharedPreferences("AppSettings", MODE_PRIVATE);
         boolean isDarkMode = sharedPreferences.getBoolean("DarkMode", false);

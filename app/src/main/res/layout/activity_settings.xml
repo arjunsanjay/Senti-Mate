@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="20dp"
-    android:background="@color/white">
+    android:background="?attr/colorOnPrimary">
 
     <TextView
         android:id="@+id/titleText"
@@ -13,23 +13,13 @@
         android:text="Settings"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="?attr/colorOnBackground"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp"/>
 
-    <Button
-        android:id="@+id/btnEditProfile"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Edit Profile"
-        android:textColor="@color/white"
-        android:background="@color/purple"
-        app:layout_constraintTop_toBottomOf="@id/titleText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="20dp"/>
+
 
     <Button
         android:id="@+id/btnChangeTheme"
@@ -38,16 +28,16 @@
         android:text="Change Theme"
         android:textColor="@color/white"
         android:background="@color/purple"
-        app:layout_constraintTop_toBottomOf="@id/btnEditProfile"
+        app:layout_constraintTop_toBottomOf="@id/titleText"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"/>
 
     <Button
-        android:id="@+id/btnNotifications"
+        android:id="@+id/btnGoToLogin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Notification Preferences"
+        android:text="Go to Login"
         android:textColor="@color/white"
         android:background="@color/purple"
         app:layout_constraintTop_toBottomOf="@id/btnChangeTheme"
@@ -55,28 +45,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="10dp"/>
 
-    <Button
-        android:id="@+id/btnManageData"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Manage Data (Backup/Restore)"
-        android:textColor="@color/white"
-        android:background="@color/purple"
-        app:layout_constraintTop_toBottomOf="@id/btnNotifications"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"/>
 
-    <Button
-        android:id="@+id/btnPrivacy"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Privacy Settings"
-        android:textColor="@color/white"
-        android:background="@color/purple"
-        app:layout_constraintTop_toBottomOf="@id/btnManageData"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="10dp"/>
+
+
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
